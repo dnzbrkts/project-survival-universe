@@ -1,65 +1,64 @@
-'use strict';
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-const { Model } = require('sequelize');
-
-module.exports = (sequelize, DataTypes) => {
-  class ServicePartsUsed extends Model {
-    static associate(models) {
-      ServicePartsUsed.belongsTo(models.ServiceRequest, {
-        foreignKey: 'service_request_id',
-        as: 'serviceRequest'
-      });
-
-      ServicePartsUsed.belongsTo(models.Product, {
-        foreignKey: 'product_id',
-        as: 'product'
-      });
+const ServicePartsUsed = sequelize.define('ServicePartsUsed', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  service_request_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'service_requests',
+      key: 'id'
     }
+  },
+  product_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'products',
+      key: 'id'
+    }
+  },
+  quantity: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  unit_price: {
+    type: DataTypes.DECIMAL(15, 4),
+    allowNull: false
+  },
+  total_price: {
+    type: DataTypes.DECIMAL(15, 2),
+    allowNull: false
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
   }
+}, {
+  tableName: 'service_parts_used',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: false
+});
 
-  ServicePartsUsed.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    service_request_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    product_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: { min: 1 }
-    },
-    unit_price: {
-      type: DataTypes.DECIMAL(15, 4),
-      allowNull: false,
-      validate: { min: 0 }
-    },
-    total_price: {
-      type: DataTypes.DECIMAL(15, 2),
-      allowNull: false,
-      validate: { min: 0 }
-    }
-  }, {
-    sequelize,
-    modelName: 'ServicePartsUsed',
-    tableName: 'service_parts_used',
-    underscored: true,
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: false,
-    hooks: {
-      beforeSave: (item) => {
-        item.total_price = (parseFloat(item.quantity) * parseFloat(item.unit_price)).toFixed(2);
-      }
-    }
+// İlişkiler
+ServicePartsUsed.associate = (models) => {
+  // Servis talebi ilişkisi
+  ServicePartsUsed.belongsTo(models.ServiceRequest, {
+    foreignKey: 'service_request_id',
+    as: 'serviceRequest'
   });
 
-  return ServicePartsUsed;
+  // Ürün ilişkisi
+  ServicePartsUsed.belongsTo(models.Product, {
+    foreignKey: 'product_id',
+    as: 'product'
+  });
 };
+
+module.exports = ServicePartsUsed;

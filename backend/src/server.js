@@ -111,6 +111,18 @@ function setupBasicRoutes() {
   const customerRoutes = require('./routes/customerRoutes');
   app.use('/api/customers', customerRoutes);
 
+  // Invoice management routes
+  const invoiceRoutes = require('./routes/invoiceRoutes');
+  app.use('/api/invoices', invoiceRoutes);
+
+  // Service management routes
+  const serviceRoutes = require('./routes/serviceRoutes');
+  app.use('/api', serviceRoutes);
+
+  // Accounting management routes
+  const accountingRoutes = require('./routes/accountingRoutes');
+  app.use('/api/accounting', accountingRoutes);
+
   // Sistem durumu
   app.get('/api/system/status', (_, res) => {
     if (!moduleSystem) {

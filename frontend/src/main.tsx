@@ -2,14 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { HelmetProvider } from 'react-helmet-async'
 import { Toaster } from 'react-hot-toast'
 
 import App from './App'
 import { store } from './store'
-import { theme } from './theme'
+import DynamicThemeProvider from './components/Theme/DynamicThemeProvider'
 
 // Global styles
 import './styles/global.css'
@@ -19,7 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <HelmetProvider>
       <Provider store={store}>
         <BrowserRouter>
-          <ThemeProvider theme={theme}>
+          <DynamicThemeProvider>
             <CssBaseline />
             <App />
             <Toaster
@@ -46,7 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 },
               }}
             />
-          </ThemeProvider>
+          </DynamicThemeProvider>
         </BrowserRouter>
       </Provider>
     </HelmetProvider>

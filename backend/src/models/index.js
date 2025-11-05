@@ -31,6 +31,11 @@ const Currency = require('./Currency');
 const ExchangeRate = require('./ExchangeRate');
 const Barcode = require('./Barcode');
 
+// Muhasebe modelleri
+const AccountingAccount = require('./AccountingAccount');
+const AccountingEntry = require('./AccountingEntry');
+const AccountingMovement = require('./AccountingMovement');
+
 // Model'leri sequelize instance ile başlat
 const models = {
   SystemModule: SystemModule(sequelize, Sequelize.DataTypes),
@@ -55,7 +60,12 @@ const models = {
   ServicePartsUsed: ServicePartsUsed(sequelize, Sequelize.DataTypes),
   Currency: Currency(sequelize, Sequelize.DataTypes),
   ExchangeRate: ExchangeRate(sequelize, Sequelize.DataTypes),
-  Barcode: Barcode(sequelize, Sequelize.DataTypes)
+  Barcode: Barcode(sequelize, Sequelize.DataTypes),
+  
+  // Muhasebe modelleri
+  AccountingAccount: AccountingAccount(sequelize, Sequelize.DataTypes),
+  AccountingEntry: AccountingEntry(sequelize, Sequelize.DataTypes),
+  AccountingMovement: AccountingMovement(sequelize, Sequelize.DataTypes)
 };
 
 // Model ilişkilerini kur

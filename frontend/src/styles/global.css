@@ -6,26 +6,22 @@
 
 html {
   height: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
-  height: 100%;
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f5f5;
 }
 
 #root {
   height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 /* Scrollbar Styles */
@@ -48,7 +44,7 @@ body {
   background: #a8a8a8;
 }
 
-/* Firefox scrollbar */
+/* Firefox Scrollbar */
 * {
   scrollbar-width: thin;
   scrollbar-color: #c1c1c1 #f1f1f1;
@@ -68,7 +64,7 @@ body {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -77,11 +73,11 @@ body {
 }
 
 .fade-in {
-  animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-out;
 }
 
 /* Slide In Animation */
-@keyframes slideIn {
+@keyframes slideInLeft {
   from {
     opacity: 0;
     transform: translateX(-20px);
@@ -92,8 +88,8 @@ body {
   }
 }
 
-.slide-in {
-  animation: slideIn 0.3s ease-in-out;
+.slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
 }
 
 /* Utility Classes */
@@ -119,41 +115,35 @@ body {
 
 .flex-center {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .flex-between {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
-.flex-column {
+.flex-start {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.no-wrap {
-  white-space: nowrap;
-}
-
-.ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-.no-select {
-  user-select: none;
+.flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /* Print Styles */
 @media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+  
   .no-print {
     display: none !important;
   }
@@ -161,156 +151,76 @@ body {
   .print-only {
     display: block !important;
   }
-  
-  body {
-    background: white !important;
-    color: black !important;
-  }
-  
-  .MuiAppBar-root,
-  .MuiDrawer-root,
-  .MuiSpeedDial-root {
-    display: none !important;
-  }
 }
 
-/* Mobile Responsive */
+/* Mobile Responsive Helpers */
 @media (max-width: 768px) {
-  .hide-mobile {
+  .mobile-hidden {
     display: none !important;
   }
   
-  .show-mobile {
-    display: block !important;
-  }
-}
-
-@media (min-width: 769px) {
-  .hide-desktop {
-    display: none !important;
-  }
-  
-  .show-desktop {
-    display: block !important;
+  .mobile-full-width {
+    width: 100% !important;
   }
 }
 
 /* Focus Styles */
-.focus-visible {
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
   outline: 2px solid #1976d2;
   outline-offset: 2px;
 }
 
-/* Error Boundary Styles */
-.error-boundary {
-  padding: 20px;
-  text-align: center;
-  background-color: #fff;
-  border: 1px solid #f44336;
-  border-radius: 8px;
-  margin: 20px;
+/* Selection Styles */
+::selection {
+  background-color: #1976d2;
+  color: white;
 }
 
-.error-boundary h2 {
-  color: #f44336;
-  margin-bottom: 16px;
+::-moz-selection {
+  background-color: #1976d2;
+  color: white;
 }
 
-.error-boundary p {
-  color: #666;
-  margin-bottom: 16px;
+/* Custom Scrollbar for Dark Mode */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #2d2d2d;
 }
 
-/* Custom MUI Overrides */
-.MuiDataGrid-root {
-  border: none;
-  border-radius: 8px;
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #555;
 }
 
-.MuiDataGrid-columnHeaders {
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.MuiDataGrid-cell {
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.MuiDataGrid-row:hover {
-  background-color: rgba(25, 118, 210, 0.04);
-}
-
-/* Status Indicators */
-.status-active {
-  color: #4caf50;
-  font-weight: 500;
-}
-
-.status-inactive {
-  color: #f44336;
-  font-weight: 500;
-}
-
-.status-pending {
-  color: #ff9800;
-  font-weight: 500;
-}
-
-.status-maintenance {
-  color: #9c27b0;
-  font-weight: 500;
-}
-
-/* Module Category Colors */
-.category-core {
-  color: #f44336;
-}
-
-.category-operasyon {
-  color: #2196f3;
-}
-
-.category-satis {
-  color: #4caf50;
-}
-
-.category-muhasebe {
-  color: #9c27b0;
-}
-
-.category-ik {
-  color: #3f51b5;
-}
-
-.category-entegrasyon {
-  color: #ff5722;
-}
-
-.category-sistem {
-  color: #607d8b;
-}
-
-.category-general {
-  color: #795548;
-}
-
-/* Loading States */
-.skeleton-loading {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #777;
 }
 
 /* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  button,
+  input,
+  select,
+  textarea {
+    border: 2px solid;
+  }
+}
+
+/* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -318,16 +228,61 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-/* High Contrast Mode */
-@media (prefers-contrast: high) {
-  .MuiButton-contained {
-    border: 2px solid currentColor;
-  }
-  
-  .MuiCard-root {
-    border: 1px solid #000;
-  }
+/* Custom Material-UI Overrides */
+.MuiDataGrid-root {
+  border: none;
+}
+
+.MuiDataGrid-cell:focus {
+  outline: none;
+}
+
+.MuiDataGrid-columnHeader:focus {
+  outline: none;
+}
+
+/* Custom Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-overlay.dark {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Error Boundary Styles */
+.error-boundary {
+  padding: 2rem;
+  text-align: center;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin: 1rem;
+}
+
+.error-boundary h2 {
+  color: #dc3545;
+  margin-bottom: 1rem;
+}
+
+.error-boundary pre {
+  background-color: #f1f3f4;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  text-align: left;
+  font-size: 0.875rem;
 }
