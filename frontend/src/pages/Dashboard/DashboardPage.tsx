@@ -53,6 +53,7 @@ import StatsCard from '../../components/Dashboard/StatsCard'
 import QuickAccessCard from '../../components/Dashboard/QuickAccessCard'
 import RecentActivitiesList from '../../components/Dashboard/RecentActivitiesList'
 import CriticalStockAlert from '../../components/Dashboard/CriticalStockAlert'
+import CriticalStockNotification from '../../components/Inventory/CriticalStockNotification'
 
 const DashboardPage: React.FC = () => {
   const dispatch = useDispatch()
@@ -192,6 +193,9 @@ const DashboardPage: React.FC = () => {
 
   return (
     <Box>
+      {/* Kritik Stok Uyarısı */}
+      <CriticalStockNotification />
+
       {/* Hata Durumu */}
       {error && (
         <Alert severity="error" sx={{ mb: 3 }} onClose={() => dispatch({ type: 'dashboard/clearDashboardError' })}>

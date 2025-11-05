@@ -70,13 +70,13 @@ router.delete('/categories/:id',
 );
 
 // Stok hareketleri
-router.post('/movements',
+router.post('/stock-movements',
   permissionMiddleware('stok.hareket.ekle'),
   InventoryController.getCreateStockMovementValidation(),
   inventoryController.createStockMovement.bind(inventoryController)
 );
 
-router.get('/movements',
+router.get('/stock-movements',
   permissionMiddleware('stok.hareket.liste'),
   inventoryController.getStockMovements.bind(inventoryController)
 );
@@ -87,12 +87,12 @@ router.get('/stock-levels',
   inventoryController.getStockLevels.bind(inventoryController)
 );
 
-router.get('/critical-alerts',
+router.get('/critical-stock-alerts',
   permissionMiddleware('stok.uyari.goruntule'),
   inventoryController.getCriticalStockAlerts.bind(inventoryController)
 );
 
-router.get('/reports/stock',
+router.get('/stock-report',
   permissionMiddleware('stok.rapor.goruntule'),
   inventoryController.generateStockReport.bind(inventoryController)
 );

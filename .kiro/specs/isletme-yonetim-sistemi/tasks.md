@@ -212,7 +212,10 @@
   - Hızlı erişim menüsünü oluştur
   - _Gereksinimler: Genel sistem kullanımı_
 
-- [ ] 14. Stok yönetimi frontend'ini implement et
+- [x] 14. Stok yönetimi frontend'ini implement et
+
+
+
   - Ürün listesi sayfasını oluştur
   - Ürün ekleme/düzenleme formlarını yaz
   - Stok hareketi kayıt formunu oluştur
