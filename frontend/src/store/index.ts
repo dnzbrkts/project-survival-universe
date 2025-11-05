@@ -8,6 +8,7 @@ import permissionSlice from './slices/permissionSlice'
 import uiSlice from './slices/uiSlice'
 import dashboardSlice from './slices/dashboardSlice'
 import inventorySlice from './slices/inventorySlice'
+import invoiceSlice from './slices/invoiceSlice'
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     ui: uiSlice,
     dashboard: dashboardSlice,
     inventory: inventorySlice,
+    invoice: invoiceSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -324,6 +324,86 @@ export interface AppEvent {
   timestamp: string
 }
 
+// Invoice types
+export interface Customer {
+  id: number
+  customerCode: string
+  companyName: string
+  customerType: 'customer' | 'supplier' | 'both'
+  taxNumber?: string
+  taxOffice?: string
+  address?: string
+  phone?: string
+  email?: string
+  contactPerson?: string
+  paymentTerms: number
+  creditLimit: number
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Invoice {
+  id: number
+  invoiceNumber: string
+  invoiceType: 'sales' | 'purchase'
+  customerId: number
+  customer?: Customer
+  invoiceDate: string
+  dueDate?: string
+  subtotal: number
+  taxAmount: number
+  totalAmount: number
+  currency: string
+  exchangeRate: number
+  status: 'draft' | 'approved' | 'paid' | 'cancelled'
+  paymentStatus: 'unpaid' | 'partial' | 'paid'
+  notes?: string
+  items: InvoiceItem[]
+  createdBy: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface InvoiceItem {
+  id?: number
+  invoiceId?: number
+  productId?: number
+  product?: {
+    id: number
+    productCode: string
+    productName: string
+    unit: string
+    salePrice: number
+    taxRate: number
+  }
+  description: string
+  quantity: number
+  unitPrice: number
+  discountRate: number
+  taxRate: number
+  lineTotal: number
+  createdAt?: string
+}
+
+export interface Payment {
+  id: number
+  paymentNumber: string
+  invoiceId: number
+  invoice?: Invoice
+  customerId: number
+  customer?: Customer
+  paymentMethod: 'cash' | 'bank_transfer' | 'credit_card' | 'check'
+  amount: number
+  currency: string
+  exchangeRate: number
+  paymentDate: string
+  referenceNumber?: string
+  notes?: string
+  createdBy: number
+  createdAt: string
+}
+
 // Module system types (re-export from core)
 export type { 
   ModuleDefinition, 

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { ModuleSystem } from '../../core/ModuleSystem'
+import { systemApi } from '../../services/api/systemApi'
 
 interface AppState {
   isInitialized: boolean

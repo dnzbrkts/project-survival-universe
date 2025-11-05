@@ -223,7 +223,11 @@
   - Kritik stok uyarıları için notification sistemi ekle
   - _Gereksinimler: 2.1, 2.2, 2.3, 2.4_
 
-- [ ] 15. Fatura yönetimi frontend'ini implement et
+- [x] 15. Fatura yönetimi frontend'ini implement et
+
+
+
+
   - Fatura listesi sayfasını oluştur
   - Fatura oluşturma formunu yaz
   - Fatura kalemi ekleme/çıkarma fonksiyonalitesini implement et
