@@ -1,6 +1,6 @@
 const express = require('express');
 const ServiceController = require('./ServiceController');
-const { authMiddleware, permissionMiddleware } = require('../../middleware/auth');
+const { authMiddleware, permissionMiddleware } = require('../../middleware');
 const {
   createServiceRequestValidation,
   updateServiceRequestValidation,
@@ -17,35 +17,35 @@ const router = express.Router();
 
 // Servis talebi CRUD endpoints
 router.get('/', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.list'),
   paginationValidation,
   ServiceController.getAllServiceRequests
 );
 
 router.get('/:id', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.view'),
   idParamValidation,
   ServiceController.getServiceRequestById
 );
 
 router.post('/', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.create'),
   createServiceRequestValidation,
   ServiceController.createServiceRequest
 );
 
 router.put('/:id', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.update'),
   updateServiceRequestValidation,
   ServiceController.updateServiceRequest
 );
 
 router.delete('/:id', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.delete'),
   idParamValidation,
   ServiceController.deleteServiceRequest
@@ -53,7 +53,7 @@ router.delete('/:id',
 
 // Servis durumu güncelleme
 router.patch('/:id/status', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.update_status'),
   updateStatusValidation,
   ServiceController.updateServiceStatus
@@ -61,7 +61,7 @@ router.patch('/:id/status',
 
 // Teknisyen atama
 router.patch('/:id/assign-technician', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.assign_technician'),
   assignTechnicianValidation,
   ServiceController.assignTechnician
@@ -69,14 +69,14 @@ router.patch('/:id/assign-technician',
 
 // Servis aktiviteleri
 router.get('/:id/activities', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.view'),
   idParamValidation,
   ServiceController.getServiceActivities
 );
 
 router.post('/:id/activities', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.add_activity'),
   addActivityValidation,
   ServiceController.addServiceActivity
@@ -84,14 +84,14 @@ router.post('/:id/activities',
 
 // Kullanılan parçalar
 router.get('/:id/parts', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.view'),
   idParamValidation,
   ServiceController.getServiceParts
 );
 
 router.post('/:id/parts', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.add_parts'),
   addPartsValidation,
   ServiceController.addServiceParts
@@ -99,14 +99,14 @@ router.post('/:id/parts',
 
 // Raporlar
 router.get('/reports/history', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.reports'),
   reportFiltersValidation,
   ServiceController.getServiceHistory
 );
 
 router.get('/reports/technician-performance', 
-  authMiddleware, 
+  authMiddleware.authenticateToken(), 
   permissionMiddleware('service.reports'),
   reportFiltersValidation,
   ServiceController.getTechnicianPerformance

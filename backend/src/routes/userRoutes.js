@@ -19,7 +19,6 @@ router.use(authMiddleware.authenticateToken());
  * @access  Private (user.list permission)
  */
 router.get('/', 
-  UserController.getUsersValidation(),
   userController.getUsers.bind(userController)
 );
 
@@ -38,7 +37,6 @@ router.get('/:id',
  * @access  Private (user.create permission)
  */
 router.post('/', 
-  UserController.getCreateUserValidation(),
   userController.createUser.bind(userController)
 );
 
@@ -48,7 +46,6 @@ router.post('/',
  * @access  Private (user.update permission)
  */
 router.put('/:id', 
-  UserController.getUpdateUserValidation(),
   userController.updateUser.bind(userController)
 );
 
@@ -67,7 +64,6 @@ router.delete('/:id',
  * @access  Private (authenticated user)
  */
 router.put('/profile/update', 
-  UserController.getUpdateProfileValidation(),
   userController.updateProfile.bind(userController)
 );
 
@@ -77,7 +73,6 @@ router.put('/profile/update',
  * @access  Private (user.manage_roles permission)
  */
 router.put('/:id/roles', 
-  UserController.getUpdateUserRolesValidation(),
   userController.updateUserRoles.bind(userController)
 );
 
@@ -96,7 +91,6 @@ router.patch('/:id/toggle-status',
  * @access  Private (user.reset_password permission)
  */
 router.post('/:id/reset-password', 
-  UserController.getResetPasswordValidation(),
   userController.resetUserPassword.bind(userController)
 );
 

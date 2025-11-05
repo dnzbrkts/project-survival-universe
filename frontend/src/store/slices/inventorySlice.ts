@@ -286,7 +286,22 @@ export const fetchCriticalStockAlerts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await inventoryApi.getCriticalStockAlerts()
-      return response.data
+      // Backend formatını frontend formatına çevir
+      const alerts = (response.data || []).map((item: any) => ({
+        productId: item.product_id || item.productId,
+        productCode: item.product_code || item.productCode,
+        productName: item.product_name || item.productName,
+        currentStock: item.current_stock || item.currentStock,
+        criticalStockLevel: item.critical_stock_level || item.criticalStockLevel,
+        unit: item.unit,
+        category: item.category?.category_name || item.category,
+        lastMovementDate: item.last_movement_date || item.lastMovementDate
+      }))
+      
+      return {
+        alerts,
+        count: response.count || alerts.length
+      }
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Kritik stok uyarıları yüklenirken hata oluştu')
     }

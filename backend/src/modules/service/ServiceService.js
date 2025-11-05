@@ -1,6 +1,6 @@
 const { ServiceRequest, ServiceActivity, ServicePartsUsed, Customer, Product, User } = require('../../models');
 const { Op } = require('sequelize');
-const sequelize = require('../../config/database');
+const { sequelize } = require('../../config/database');
 
 class ServiceService {
   // Otomatik servis talebi numarası oluştur

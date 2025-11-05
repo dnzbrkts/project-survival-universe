@@ -134,15 +134,15 @@ const CriticalStockNotification: React.FC<CriticalStockNotificationProps> = ({
             </Typography>
             
             <List dense sx={{ maxHeight: 300, overflow: 'auto' }}>
-              {criticalStockAlerts.map((alert, index) => (
+              {(criticalStockAlerts || []).map((alert, index) => (
                 <ListItem key={`${alert.productId}-${index}`} divider>
                   <ListItemIcon>
                     <Inventory color="warning" />
                   </ListItemIcon>
                   <ListItemText
                     primary={
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Typography variant="body2" fontWeight="medium">
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Typography variant="body2" fontWeight="medium" component="span">
                           {alert.productName}
                         </Typography>
                         <Chip 
@@ -150,25 +150,25 @@ const CriticalStockNotification: React.FC<CriticalStockNotificationProps> = ({
                           size="small" 
                           variant="outlined"
                         />
-                      </Box>
+                      </span>
                     }
                     secondary={
-                      <Box sx={{ mt: 0.5 }}>
-                        <Typography variant="caption" color="text.secondary">
+                      <span style={{ marginTop: '4px', display: 'block' }}>
+                        <Typography variant="caption" color="text.secondary" component="span">
                           Mevcut: {alert.currentStock} {alert.unit} | 
                           Kritik Seviye: {alert.criticalStockLevel} {alert.unit}
                         </Typography>
                         {alert.category && (
-                          <Typography variant="caption" color="text.secondary" sx={{ ml: 1 }}>
+                          <Typography variant="caption" color="text.secondary" component="span" sx={{ ml: 1 }}>
                             | Kategori: {alert.category}
                           </Typography>
                         )}
                         {alert.lastMovementDate && (
-                          <Typography variant="caption" color="text.secondary" display="block">
+                          <Typography variant="caption" color="text.secondary" component="span" display="block">
                             Son Hareket: {new Date(alert.lastMovementDate).toLocaleDateString('tr-TR')}
                           </Typography>
                         )}
-                      </Box>
+                      </span>
                     }
                   />
                   <Box sx={{ ml: 2 }}>

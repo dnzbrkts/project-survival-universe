@@ -23,7 +23,8 @@ function permissionMiddleware(requiredPermissions) {
       }
 
       // Süper admin kontrolü (tüm yetkilere sahip)
-      if (req.user.is_super_admin) {
+      const userRoles = req.user.roleCodes || req.user.roles || [];
+      if (req.user.is_super_admin || userRoles.includes('SUPER_ADMIN')) {
         return next();
       }
 
@@ -33,7 +34,7 @@ function permissionMiddleware(requiredPermissions) {
         : [requiredPermissions];
 
       // Kullanıcının yetkileri
-      const userPermissions = req.user.permissions || [];
+      const userPermissions = req.user.allPermissions || req.user.permissions || [];
 
       // Yetki kontrolü
       const hasPermission = permissions.some(permission => 
@@ -82,7 +83,8 @@ function moduleAccessMiddleware(moduleCode) {
       }
 
       // Süper admin kontrolü
-      if (req.user.is_super_admin) {
+      const userRoles = req.user.roleCodes || req.user.roles || [];
+      if (req.user.is_super_admin || userRoles.includes('SUPER_ADMIN')) {
         return next();
       }
 
@@ -131,7 +133,8 @@ function roleMiddleware(requiredRoles) {
       }
 
       // Süper admin kontrolü
-      if (req.user.is_super_admin) {
+      const userRoles = req.user.roleCodes || req.user.roles || [];
+      if (req.user.is_super_admin || userRoles.includes('SUPER_ADMIN')) {
         return next();
       }
 
@@ -139,9 +142,6 @@ function roleMiddleware(requiredRoles) {
       const roles = Array.isArray(requiredRoles) 
         ? requiredRoles 
         : [requiredRoles];
-
-      // Kullanıcının rolleri
-      const userRoles = req.user.roles || [];
 
       // Rol kontrolü
       const hasRole = roles.some(role => 
@@ -189,11 +189,12 @@ function requireAllPermissions(requiredPermissions) {
         });
       }
 
-      if (req.user.is_super_admin) {
+      const userRoles = req.user.roleCodes || req.user.roles || [];
+      if (req.user.is_super_admin || userRoles.includes('SUPER_ADMIN')) {
         return next();
       }
 
-      const userPermissions = req.user.permissions || [];
+      const userPermissions = req.user.allPermissions || req.user.permissions || [];
 
       // Tüm yetkiler var mı kontrol et
       const hasAllPermissions = requiredPermissions.every(permission => 

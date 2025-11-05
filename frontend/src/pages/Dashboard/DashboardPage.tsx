@@ -6,42 +6,25 @@ import {
   Card,
   CardContent,
   Typography,
-  Avatar,
   Chip,
   LinearProgress,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Divider,
-  Button,
   IconButton,
   Skeleton,
   Alert,
   AlertTitle,
 } from '@mui/material'
 import {
-  Dashboard as DashboardIcon,
-  TrendingUp,
   Inventory,
   People,
   Receipt,
   Warning,
-  CheckCircle,
-  Error,
   Refresh,
-  Settings,
-  Build,
-  Assessment,
-  ShoppingCart,
-  AccountBalance,
 } from '@mui/icons-material'
 
-import { RootState } from '../../store'
+import { RootState, AppDispatch } from '../../store'
 import { setPageInfo } from '../../store/slices/uiSlice'
 import { refreshSystemInfo } from '../../store/slices/appSlice'
 import {
-  fetchDashboardData,
   fetchDashboardStats,
   fetchRecentActivities,
   fetchQuickAccessItems,
@@ -56,7 +39,7 @@ import CriticalStockAlert from '../../components/Dashboard/CriticalStockAlert'
 import CriticalStockNotification from '../../components/Inventory/CriticalStockNotification'
 
 const DashboardPage: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const { user } = useSelector((state: RootState) => state.auth)
   const { systemInfo } = useSelector((state: RootState) => state.app)
   const { activeModules } = useSelector((state: RootState) => state.modules)
@@ -253,7 +236,7 @@ const DashboardPage: React.FC = () => {
         Hızlı Erişim
       </Typography>
       <Grid container spacing={3} sx={{ mb: 3 }}>
-        {(quickAccess.length > 0 ? quickAccess : fallbackQuickAccess).slice(0, 6).map((item) => (
+        {(quickAccess.length > 0 ? quickAccess : fallbackQuickAccess).slice(0, 6).map((item: any) => (
           <Grid item xs={12} sm={6} md={4} lg={2} key={item.id}>
             <QuickAccessCard item={item} />
           </Grid>

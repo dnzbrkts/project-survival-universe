@@ -10,66 +10,65 @@ const {
   paginationValidation
 } = require('../modules/accounting/validations');
 const authMiddleware = require('../middleware/authMiddleware');
-const roleMiddleware = require('../middleware/roleMiddleware');
 
 const accountingController = new AccountingController();
 
 // Tüm route'lar için authentication gerekli
-router.use(authMiddleware);
+router.use(authMiddleware.authenticateToken());
 
 // Muhasebe kayıtları yönetimi
 router.post('/entries', 
-  roleMiddleware(['admin', 'accountant']),
+  authMiddleware.requireRoles(['admin', 'accountant']),
   accountingEntryValidation,
   accountingController.createAccountingEntry.bind(accountingController)
 );
 
 router.get('/entries',
-  roleMiddleware(['admin', 'accountant', 'manager']),
+  authMiddleware.requireRoles(['admin', 'accountant', 'manager']),
   [...paginationValidation, ...reportDateValidation],
   accountingController.getAccountingEntries.bind(accountingController)
 );
 
 router.get('/entries/:id',
-  roleMiddleware(['admin', 'accountant', 'manager']),
+  authMiddleware.requireRoles(['admin', 'accountant', 'manager']),
   accountingController.getAccountingEntryById.bind(accountingController)
 );
 
 // Otomatik yevmiye kaydı oluşturma
 router.post('/entries/automatic/:reference_type/:reference_id',
-  roleMiddleware(['admin', 'accountant']),
+  authMiddleware.requireRoles(['admin', 'accountant']),
   automaticEntryValidation,
   accountingController.createAutomaticEntry.bind(accountingController)
 );
 
 // Raporlar
 router.get('/reports/balance-sheet',
-  roleMiddleware(['admin', 'accountant', 'manager']),
+  authMiddleware.requireRoles(['admin', 'accountant', 'manager']),
   reportDateValidation,
   accountingController.generateBalanceSheet.bind(accountingController)
 );
 
 router.get('/reports/income-statement',
-  roleMiddleware(['admin', 'accountant', 'manager']),
+  authMiddleware.requireRoles(['admin', 'accountant', 'manager']),
   reportDateValidation,
   accountingController.generateIncomeStatement.bind(accountingController)
 );
 
 router.get('/reports/trial-balance',
-  roleMiddleware(['admin', 'accountant', 'manager']),
+  authMiddleware.requireRoles(['admin', 'accountant', 'manager']),
   reportDateValidation,
   accountingController.generateTrialBalance.bind(accountingController)
 );
 
 router.get('/reports/periodical',
-  roleMiddleware(['admin', 'accountant', 'manager']),
+  authMiddleware.requireRoles(['admin', 'accountant', 'manager']),
   periodicalReportValidation,
   accountingController.generatePeriodicalReports.bind(accountingController)
 );
 
 // Hesap bakiyeleri
 router.get('/account-balances',
-  roleMiddleware(['admin', 'accountant', 'manager']),
+  authMiddleware.requireRoles(['admin', 'accountant', 'manager']),
   accountBalanceValidation,
   accountingController.getAccountBalances.bind(accountingController)
 );

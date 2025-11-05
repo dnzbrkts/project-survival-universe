@@ -8,8 +8,13 @@ interface User {
   email: string
   firstName: string
   lastName: string
-  roles: string[]
-  permissions: string[]
+  roles?: string[]
+  permissions?: string[]
+  allPermissions?: string[]
+  roleCodes?: string[]
+  roleNames?: string[]
+  isActive?: boolean
+  lastLoginAt?: string
 }
 
 interface AuthState {
@@ -37,18 +42,21 @@ export const login = createAsyncThunk(
     try {
       const response = await authApi.login(credentials)
       
+      // Backend'den gelen token formatını düzenle
+      const token = response.tokens?.accessToken || response.token
+      
       // Token'ı localStorage'a kaydet
-      localStorage.setItem('token', response.token)
+      localStorage.setItem('token', token)
       
       // Kullanıcı oturumunu başlat ve menüyü oluştur
       const userMenu = ModuleSystem.initializeUserSession(
-        response.user.permissions,
-        response.user.roles
+        response.user.allPermissions || response.user.permissions || [],
+        response.user.roleCodes || response.user.roles || []
       )
       
       return {
         user: response.user,
-        token: response.token,
+        token: token,
         userMenu,
       }
     } catch (error: any) {
@@ -79,8 +87,8 @@ export const checkAuth = createAsyncThunk(
       
       // Kullanıcı oturumunu başlat ve menüyü oluştur
       const userMenu = ModuleSystem.initializeUserSession(
-        response.user.permissions,
-        response.user.roles
+        response.user.allPermissions || response.user.permissions || [],
+        response.user.roleCodes || response.user.roles || []
       )
       
       return {

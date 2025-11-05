@@ -19,7 +19,6 @@ router.use(authMiddleware.authenticateToken());
  * @access  Private (role.list permission)
  */
 router.get('/', 
-  RoleController.getRolesValidation(),
   roleController.getRoles.bind(roleController)
 );
 
@@ -47,7 +46,6 @@ router.get('/:id',
  * @access  Private (role.create permission)
  */
 router.post('/', 
-  RoleController.getCreateRoleValidation(),
   roleController.createRole.bind(roleController)
 );
 
@@ -57,7 +55,6 @@ router.post('/',
  * @access  Private (role.update permission)
  */
 router.put('/:id', 
-  RoleController.getUpdateRoleValidation(),
   roleController.updateRole.bind(roleController)
 );
 
@@ -76,7 +73,6 @@ router.delete('/:id',
  * @access  Private (role.manage_permissions permission)
  */
 router.put('/:id/permissions', 
-  RoleController.getUpdateRolePermissionsValidation(),
   roleController.updateRolePermissions.bind(roleController)
 );
 

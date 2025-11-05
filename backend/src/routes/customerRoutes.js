@@ -89,7 +89,7 @@ router.get('/',
     query('customer_type').optional().isIn(['customer', 'supplier', 'both']).withMessage('Geçersiz müşteri tipi'),
     query('is_active').optional().isBoolean().withMessage('Aktiflik durumu boolean olmalıdır')
   ],
-  CustomerController.getCustomers
+  CustomerController.getCustomers.bind(CustomerController)
 );
 
 /**
@@ -100,7 +100,7 @@ router.get('/',
 router.get('/:id',
   permissionMiddleware('cari.detay'),
   idValidationRules(),
-  CustomerController.getCustomer
+  CustomerController.getCustomer.bind(CustomerController)
 );
 
 /**
@@ -111,7 +111,7 @@ router.get('/:id',
 router.post('/',
   permissionMiddleware('cari.ekle'),
   customerValidationRules(),
-  CustomerController.createCustomer
+  CustomerController.createCustomer.bind(CustomerController)
 );
 
 /**
@@ -123,7 +123,7 @@ router.put('/:id',
   permissionMiddleware('cari.duzenle'),
   idValidationRules(),
   customerValidationRules(),
-  CustomerController.updateCustomer
+  CustomerController.updateCustomer.bind(CustomerController)
 );
 
 /**
@@ -134,7 +134,7 @@ router.put('/:id',
 router.delete('/:id',
   permissionMiddleware('cari.sil'),
   idValidationRules(),
-  CustomerController.deleteCustomer
+  CustomerController.deleteCustomer.bind(CustomerController)
 );
 
 /**
@@ -145,7 +145,7 @@ router.delete('/:id',
 router.get('/:id/balance',
   permissionMiddleware('cari.bakiye.goruntule'),
   idValidationRules(),
-  CustomerController.getCustomerBalance
+  CustomerController.getCustomerBalance.bind(CustomerController)
 );
 
 /**
@@ -162,7 +162,7 @@ router.get('/:id/statement',
     query('page').optional().isInt({ min: 1 }).withMessage('Sayfa numarası geçersiz'),
     query('limit').optional().isInt({ min: 1, max: 500 }).withMessage('Limit geçersiz')
   ],
-  CustomerController.getCustomerStatement
+  CustomerController.getCustomerStatement.bind(CustomerController)
 );
 
 /**
@@ -172,7 +172,7 @@ router.get('/:id/statement',
  */
 router.get('/dashboard/summary',
   permissionMiddleware('cari.ozet.goruntule'),
-  CustomerController.getDashboardSummary
+  CustomerController.getDashboardSummary.bind(CustomerController)
 );
 
 /**
@@ -182,7 +182,7 @@ router.get('/dashboard/summary',
  */
 router.get('/credit-limit-alerts',
   permissionMiddleware('cari.kredi.limit.yonet'),
-  CustomerController.getCreditLimitAlerts
+  CustomerController.getCreditLimitAlerts.bind(CustomerController)
 );
 
 /**
@@ -198,7 +198,7 @@ router.get('/overdue/receivables',
     query('customer_id').optional().isInt({ min: 1 }).withMessage('Geçersiz müşteri ID'),
     query('days_overdue').optional().isInt({ min: 1 }).withMessage('Geçersiz vade aşım günü')
   ],
-  CustomerController.getOverdueReceivables
+  CustomerController.getOverdueReceivables.bind(CustomerController)
 );
 
 module.exports = router;

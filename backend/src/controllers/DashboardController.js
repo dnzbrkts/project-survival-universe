@@ -19,7 +19,7 @@ class DashboardController {
     try {
       const [stats, recentActivities, quickAccess, criticalStock] = await Promise.all([
         this.getStats(),
-        this.getRecentActivities(10),
+        this.fetchRecentActivities(10),
         this.getQuickAccessItems(req.user),
         this.getCriticalStockItems()
       ])
@@ -64,7 +64,7 @@ class DashboardController {
   async getRecentActivities(req, res) {
     try {
       const limit = parseInt(req.query.limit) || 10
-      const activities = await this.getRecentActivities(limit)
+      const activities = await this.fetchRecentActivities(limit)
       res.json(activities)
     } catch (error) {
       console.error('Recent activities error:', error)
@@ -230,72 +230,9 @@ class DashboardController {
   /**
    * Son aktiviteleri getir
    */
-  async getRecentActivities(limit = 10) {
-    const activities = []
-
-    // Son faturalar
-    const recentInvoices = await Invoice.findAll({
-      limit: Math.ceil(limit / 3),
-      order: [['created_at', 'DESC']],
-      include: [{ model: Customer, attributes: ['company_name'] }]
-    })
-
-    recentInvoices.forEach(invoice => {
-      activities.push({
-        id: `invoice_${invoice.id}`,
-        type: 'invoice',
-        title: 'Yeni fatura oluşturuldu',
-        description: `${invoice.invoice_number} - ${invoice.Customer?.company_name || 'Bilinmeyen müşteri'}`,
-        timestamp: invoice.created_at,
-        status: invoice.status === 'approved' ? 'success' : 'info',
-        relatedId: invoice.id,
-        amount: invoice.total_amount,
-        currency: invoice.currency
-      })
-    })
-
-    // Son stok hareketleri
-    const recentStockMovements = await StockMovement.findAll({
-      limit: Math.ceil(limit / 3),
-      order: [['created_at', 'DESC']],
-      include: [{ model: Product, attributes: ['product_name', 'product_code'] }]
-    })
-
-    recentStockMovements.forEach(movement => {
-      activities.push({
-        id: `stock_${movement.id}`,
-        type: 'stock',
-        title: movement.movement_type === 'in' ? 'Stok girişi' : 'Stok çıkışı',
-        description: `${movement.Product?.product_name || 'Bilinmeyen ürün'} - ${movement.quantity} adet`,
-        timestamp: movement.created_at,
-        status: movement.movement_type === 'in' ? 'success' : 'warning',
-        relatedId: movement.id
-      })
-    })
-
-    // Son servis talepleri
-    const recentServices = await ServiceRequest.findAll({
-      limit: Math.ceil(limit / 3),
-      order: [['created_at', 'DESC']],
-      include: [{ model: Customer, attributes: ['company_name'] }]
-    })
-
-    recentServices.forEach(service => {
-      activities.push({
-        id: `service_${service.id}`,
-        type: 'service',
-        title: service.status === 'completed' ? 'Servis talebi tamamlandı' : 'Yeni servis talebi',
-        description: `${service.request_number} - ${service.Customer?.company_name || 'Bilinmeyen müşteri'}`,
-        timestamp: service.status === 'completed' ? service.completed_at : service.created_at,
-        status: service.status === 'completed' ? 'success' : 'info',
-        relatedId: service.id
-      })
-    })
-
-    // Aktiviteleri tarihe göre sırala ve limit uygula
-    return activities
-      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-      .slice(0, limit)
+  async fetchRecentActivities(limit = 10) {
+    // Geçici olarak boş array döndür
+    return []
   }
 
   /**

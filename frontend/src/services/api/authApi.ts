@@ -14,16 +14,26 @@ interface RegisterData {
 }
 
 interface LoginResponse {
+  success: boolean
+  message: string
   user: {
     id: number
     username: string
     email: string
     firstName: string
     lastName: string
-    roles: string[]
-    permissions: string[]
+    roles?: string[]
+    permissions?: string[]
+    allPermissions?: string[]
+    roleCodes?: string[]
+    roleNames?: string[]
   }
-  token: string
+  tokens?: {
+    accessToken: string
+    refreshToken: string
+    expiresIn: string
+  }
+  token?: string // Backward compatibility
 }
 
 interface UserPermissionsResponse {
@@ -53,7 +63,12 @@ class AuthApi extends BaseApi {
    * Kullanıcı girişi
    */
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
-    return this.post<LoginResponse>('/auth/login', credentials)
+    // Backend'e identifier olarak gönder
+    const payload = {
+      identifier: credentials.username,
+      password: credentials.password
+    }
+    return this.post<LoginResponse>('/auth/login', payload)
   }
 
   /**
@@ -67,7 +82,14 @@ class AuthApi extends BaseApi {
    * Token doğrulama
    */
   async verifyToken(): Promise<LoginResponse> {
-    return this.get<LoginResponse>('/auth/verify')
+    const response = await this.get<any>('/auth/verify')
+    // Backend response formatını frontend formatına çevir
+    return {
+      success: response.success,
+      message: response.message || 'Token doğrulandı',
+      user: response.user,
+      token: response.token || localStorage.getItem('token')
+    }
   }
 
   /**

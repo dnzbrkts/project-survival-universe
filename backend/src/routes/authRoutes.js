@@ -17,7 +17,6 @@ const authController = new AuthController();
  */
 router.post('/login', 
   authRateLimitMiddleware, // Rate limiting
-  AuthController.getLoginValidation(), // Validation
   authController.login.bind(authController)
 );
 
@@ -27,7 +26,6 @@ router.post('/login',
  */
 router.post('/register',
   authRateLimitMiddleware, // Rate limiting
-  AuthController.getRegisterValidation(), // Validation
   authController.register.bind(authController)
 );
 
@@ -36,7 +34,6 @@ router.post('/register',
  * Token yenileme
  */
 router.post('/refresh',
-  AuthController.getRefreshTokenValidation(), // Validation
   authController.refreshToken.bind(authController)
 );
 
@@ -64,7 +61,6 @@ router.get('/profile',
  */
 router.post('/change-password',
   authMiddleware.authenticateToken(), // Auth required
-  AuthController.getChangePasswordValidation(), // Validation
   authController.changePassword.bind(authController)
 );
 

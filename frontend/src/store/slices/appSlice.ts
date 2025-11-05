@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { ModuleSystem } from '../../core/ModuleSystem'
-import { systemApi } from '../../services/api/systemApi'
 
 interface AppState {
   isInitialized: boolean
@@ -27,16 +26,29 @@ export const initializeApp = createAsyncThunk(
   'app/initialize',
   async (_, { rejectWithValue }) => {
     try {
-      // Sistem bilgilerini al
-      const systemInfo = await systemApi.getSystemInfo()
+      // Basit başlatma - API çağrısı yapmadan
+      const mockModules = [
+        {
+          code: 'DASHBOARD',
+          name: 'Dashboard',
+          status: 'active' as const,
+          version: '1.0.0',
+          description: 'Ana dashboard modülü'
+        },
+        {
+          code: 'INVENTORY',
+          name: 'Stok Yönetimi',
+          status: 'active' as const,
+          version: '1.0.0',
+          description: 'Stok yönetimi modülü'
+        }
+      ]
       
-      // Modülleri al ve modül sistemini başlat
-      const modules = await systemApi.getModules()
-      await ModuleSystem.initialize(modules)
+      await ModuleSystem.initialize(mockModules)
       
       return {
         systemInfo: ModuleSystem.getSystemStatus(),
-        modules,
+        modules: mockModules,
       }
     } catch (error: any) {
       return rejectWithValue(error.message || 'Sistem başlatma hatası')

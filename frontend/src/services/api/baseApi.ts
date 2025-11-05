@@ -1,7 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { store } from '../../store'
-import { logout } from '../../store/slices/authSlice'
-import { addNotification } from '../../store/slices/uiSlice'
 
 // API Base URL
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api'
@@ -43,74 +40,40 @@ apiClient.interceptors.response.use(
       switch (status) {
         case 401:
           // Unauthorized - Token geçersiz
-          store.dispatch(logout())
-          store.dispatch(addNotification({
-            type: 'error',
-            title: 'Oturum Süresi Doldu',
-            message: 'Lütfen tekrar giriş yapın.',
-          }))
+          localStorage.removeItem('token')
+          window.location.href = '/login'
           break
 
         case 403:
           // Forbidden - Yetki yok
-          store.dispatch(addNotification({
-            type: 'error',
-            title: 'Erişim Engellendi',
-            message: 'Bu işlem için yetkiniz bulunmuyor.',
-          }))
+          console.error('Erişim engellendi:', data.message)
           break
 
         case 404:
           // Not Found
-          store.dispatch(addNotification({
-            type: 'error',
-            title: 'Bulunamadı',
-            message: 'İstenen kaynak bulunamadı.',
-          }))
+          console.error('Kaynak bulunamadı:', data.message)
           break
 
         case 422:
           // Validation Error
-          const validationErrors = data.errors || {}
-          const errorMessages = Object.values(validationErrors).flat()
-          store.dispatch(addNotification({
-            type: 'error',
-            title: 'Doğrulama Hatası',
-            message: errorMessages.join(', '),
-          }))
+          console.error('Doğrulama hatası:', data.errors)
           break
 
         case 500:
           // Server Error
-          store.dispatch(addNotification({
-            type: 'error',
-            title: 'Sunucu Hatası',
-            message: 'Bir hata oluştu. Lütfen daha sonra tekrar deneyin.',
-          }))
+          console.error('Sunucu hatası:', data.message)
           break
 
         default:
           // Diğer hatalar
-          store.dispatch(addNotification({
-            type: 'error',
-            title: 'Hata',
-            message: data.message || 'Beklenmeyen bir hata oluştu.',
-          }))
+          console.error('API hatası:', data.message || 'Beklenmeyen bir hata oluştu.')
       }
     } else if (error.code === 'ECONNABORTED') {
       // Timeout
-      store.dispatch(addNotification({
-        type: 'error',
-        title: 'Zaman Aşımı',
-        message: 'İstek zaman aşımına uğradı. Lütfen tekrar deneyin.',
-      }))
+      console.error('İstek zaman aşımına uğradı')
     } else {
       // Network Error
-      store.dispatch(addNotification({
-        type: 'error',
-        title: 'Bağlantı Hatası',
-        message: 'Sunucuya bağlanılamadı. İnternet bağlantınızı kontrol edin.',
-      }))
+      console.error('Bağlantı hatası:', error.message)
     }
 
     return Promise.reject(error)

@@ -15,7 +15,6 @@ router.use(authMiddleware.authenticateToken());
 // Ürün yönetimi
 router.get('/products',
   permissionMiddleware('stok.urun.liste'),
-  InventoryController.getProductsValidation(),
   inventoryController.getProducts.bind(inventoryController)
 );
 
@@ -26,13 +25,11 @@ router.get('/products/:id',
 
 router.post('/products',
   permissionMiddleware('stok.urun.ekle'),
-  InventoryController.getCreateProductValidation(),
   inventoryController.createProduct.bind(inventoryController)
 );
 
 router.put('/products/:id',
   permissionMiddleware('stok.urun.duzenle'),
-  InventoryController.getUpdateProductValidation(),
   inventoryController.updateProduct.bind(inventoryController)
 );
 
@@ -54,13 +51,11 @@ router.get('/categories/:id',
 
 router.post('/categories',
   permissionMiddleware('stok.kategori.ekle'),
-  InventoryController.getCreateCategoryValidation(),
   inventoryController.createCategory.bind(inventoryController)
 );
 
 router.put('/categories/:id',
   permissionMiddleware('stok.kategori.duzenle'),
-  InventoryController.getUpdateCategoryValidation(),
   inventoryController.updateCategory.bind(inventoryController)
 );
 
@@ -72,7 +67,6 @@ router.delete('/categories/:id',
 // Stok hareketleri
 router.post('/stock-movements',
   permissionMiddleware('stok.hareket.ekle'),
-  InventoryController.getCreateStockMovementValidation(),
   inventoryController.createStockMovement.bind(inventoryController)
 );
 

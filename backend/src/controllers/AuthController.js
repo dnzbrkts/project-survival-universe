@@ -231,10 +231,14 @@ class AuthController {
       // Middleware'den gelen kullanıcı bilgileri
       const user = req.user;
 
+      // Kullanıcı yetkilerini yeniden yükle (güncel bilgiler için)
+      const userWithPermissions = await this.authService.loadUserPermissions(user.id);
+
       res.json({
         success: true,
         valid: true,
-        user
+        user: userWithPermissions,
+        message: 'Token geçerli'
       });
 
     } catch (error) {

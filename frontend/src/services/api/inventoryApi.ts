@@ -242,8 +242,8 @@ class InventoryApi extends BaseApi {
   }
 
   // Critical Stock Alerts
-  async getCriticalStockAlerts(): Promise<ApiResponse<{ alerts: CriticalStockAlert[], count: number }>> {
-    return this.get<ApiResponse<{ alerts: CriticalStockAlert[], count: number }>>('/inventory/critical-stock-alerts')
+  async getCriticalStockAlerts(): Promise<{ success: boolean, data: CriticalStockAlert[], count: number }> {
+    return this.get<{ success: boolean, data: CriticalStockAlert[], count: number }>('/inventory/critical-stock-alerts')
   }
 
   // Stock Reports
