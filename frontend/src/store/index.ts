@@ -6,6 +6,7 @@ import authSlice from './slices/authSlice'
 import moduleSlice from './slices/moduleSlice'
 import permissionSlice from './slices/permissionSlice'
 import uiSlice from './slices/uiSlice'
+import dashboardSlice from './slices/dashboardSlice'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     modules: moduleSlice,
     permissions: permissionSlice,
     ui: uiSlice,
+    dashboard: dashboardSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

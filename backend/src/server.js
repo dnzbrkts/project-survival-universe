@@ -123,6 +123,10 @@ function setupBasicRoutes() {
   const accountingRoutes = require('./routes/accountingRoutes');
   app.use('/api/accounting', accountingRoutes);
 
+  // Dashboard routes
+  const dashboardRoutes = require('./routes/dashboardRoutes');
+  app.use('/api/dashboard', dashboardRoutes);
+
   // Sistem durumu
   app.get('/api/system/status', (_, res) => {
     if (!moduleSystem) {

@@ -202,7 +202,10 @@
   - Logout fonksiyonalitesini implement et
   - _Gereksinimler: 1.2, 1.3_
 
-- [ ] 13. Dashboard ve ana sayfa frontend'ini oluştur
+- [x] 13. Dashboard ve ana sayfa frontend'ini oluştur
+
+
+
   - Ana dashboard bileşenini oluştur
   - Özet kartları (stok, fatura, servis) ekle
   - Son işlemler listesini implement et
