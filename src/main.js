@@ -4,15 +4,17 @@
 
   KRİTİK: Buradaki ayarlar oyunun performansını, hissini ve ölçeklenmesini etkiler.
 */
-const w = this.scale.width
-const h = this.scale.height
 const config = {
   type: Phaser.AUTO,       // AUTO: tarayıcı WebGL destekliyorsa WebGL, yoksa Canvas kullanır.
   parent: "game",          // index.html’deki <div id="game"> içine canvas’ı koy.
-  width: w,              // oyun genişliği
-  height: h,             // oyun yüksekliği
   backgroundColor: "#1a1a1a",
 
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    parent: "game",
+    width: window.innerWidth,
+    height: window.innerHeight
+  },
   /*
     ✅ Physics: arcade fizik (basit ve hızlı).
     KRİTİK: Başlangıç için arcade physics en iyi seçim.
@@ -129,7 +131,10 @@ function create() {
     ✅ World bounds: fizik dünyasının sınırı.
     KRİTİK: setCollideWorldBounds true olan objeler bu sınırdan çıkamaz.
   */
-  this.physics.world.setBounds(0, 0, w, h);
+    const w = this.scale.width;
+    const h = this.scale.height;
+    this.physics.world.setBounds(0, 0, w, h);
+
 }
 
 function update() {
