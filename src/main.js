@@ -23,6 +23,11 @@ function create() {
   this.physics.add.existing(player);
   player.body.setCollideWorldBounds(true);
 
+  //Player2
+  player2= this.add.rectangle(300,300,26,26, 0xFF4500);
+  this.physics.add.existing(player2);
+  player2.body.setCollideWorldBounds(true);
+
   // Zombie
   zombie = this.add.rectangle(600, 300, 26, 26, 0xff4444);
   this.physics.add.existing(zombie);
@@ -46,7 +51,7 @@ function create() {
   infoText = this.add.text(16, 16, "WASD: Hareket | Loot'a dokun", { fontSize: "16px", color: "#ddd" });
 
   // World bounds
-  this.physics.world.setBounds(0, 0, 960, 540);
+  this.physics.world.setBounds(0, 0, 1280, 720);
 }
 
 function update() {
