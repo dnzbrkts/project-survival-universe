@@ -4,11 +4,13 @@
 
   KRİTİK: Buradaki ayarlar oyunun performansını, hissini ve ölçeklenmesini etkiler.
 */
+const w = this.scale.width
+const h = this.scale.height
 const config = {
   type: Phaser.AUTO,       // AUTO: tarayıcı WebGL destekliyorsa WebGL, yoksa Canvas kullanır.
   parent: "game",          // index.html’deki <div id="game"> içine canvas’ı koy.
-  width: 1280,              // oyun genişliği
-  height: 720,             // oyun yüksekliği
+  width: w,              // oyun genişliği
+  height: h,             // oyun yüksekliği
   backgroundColor: "#1a1a1a",
 
   /*
@@ -127,7 +129,7 @@ function create() {
     ✅ World bounds: fizik dünyasının sınırı.
     KRİTİK: setCollideWorldBounds true olan objeler bu sınırdan çıkamaz.
   */
-  this.physics.world.setBounds(0, 0, 1280, 720);
+  this.physics.world.setBounds(0, 0, w, h);
 }
 
 function update() {
