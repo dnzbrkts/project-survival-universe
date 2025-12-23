@@ -7,8 +7,8 @@
 const config = {
   type: Phaser.AUTO,       // AUTO: tarayıcı WebGL destekliyorsa WebGL, yoksa Canvas kullanır.
   parent: "game",          // index.html’deki <div id="game"> içine canvas’ı koy.
-  width: 960,              // oyun genişliği
-  height: 540,             // oyun yüksekliği
+  width: 1280,              // oyun genişliği
+  height: 720,             // oyun yüksekliği
   backgroundColor: "#1a1a1a",
 
   /*
