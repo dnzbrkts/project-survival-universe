@@ -7,8 +7,8 @@
 const config = {
   type: Phaser.AUTO,       // AUTO: tarayıcı WebGL destekliyorsa WebGL, yoksa Canvas kullanır.
   parent: "game",          // index.html’deki <div id="game"> içine canvas’ı koy.
-  width: 1280,              // oyun genişliği
-  height: 720,             // oyun yüksekliği
+  width: 960,              // oyun genişliği
+  height: 540,             // oyun yüksekliği
   backgroundColor: "#1a1a1a",
 
   /*
@@ -127,7 +127,7 @@ function create() {
     ✅ World bounds: fizik dünyasının sınırı.
     KRİTİK: setCollideWorldBounds true olan objeler bu sınırdan çıkamaz.
   */
-  this.physics.world.setBounds(0, 0, 1280, 720);
+  this.physics.world.setBounds(0, 0, 960, 540);
 }
 
 function update() {
