@@ -135,6 +135,15 @@ function create() {
     const h = this.scale.height;
     this.physics.world.setBounds(0, 0, w, h);
 
+    /*
+        Pencere boyutu değişdiğinde yeniden ölçeklendirme için gerekli.
+    */
+this.scale.on("resize", (gameSize) => {
+  const w = gameSize.width;
+  const h = gameSize.height;
+  this.physics.world.setBounds(0, 0, w, h);
+});
+
 }
 
 function update() {
