@@ -127,7 +127,7 @@ function create() {
     ✅ World bounds: fizik dünyasının sınırı.
     KRİTİK: setCollideWorldBounds true olan objeler bu sınırdan çıkamaz.
   */
-  this.physics.world.setBounds(0, 0, width, height);
+  this.physics.world.setBounds(0, 0, 1280, 720);
 }
 
 function update() {
