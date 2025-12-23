@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PSU Prototype</title>
+    <style>
+      html, body { margin: 0; padding: 0; height: 100%; background:#111; }
+      #game { width: 100%; height: 100%; display: flex; align-items:center; justify-content:center; }
+      canvas { image-rendering: pixelated; }
+    </style>
+  </head>
+  <body>
+    <div id="game"></div>
+
+    <!-- Phaser CDN (kurulum yok) -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
+    <script src="./src/main.js"></script>
+  </body>
+</html>
